@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harborway Life — Gastos Finales</title>
+  <meta name="description" content="Cobertura accesible para gastos finales sin examen médico. Proteja hoy a sus seres queridos con Harborway Life." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #1a2b4a;
+      --navy-dark:  #0f1c30;
+      --navy-light: #243555;
+      --green:      #28a745;
+      --green-dark: #1e8035;
+      --green-light:#34c558;
+      --text-dark:  #111827;
+      --text-mid:   #374151;
+      --text-muted: #6b7280;
+      --border:     #e5e7eb;
+      --white:      #ffffff;
+      --bg-light:   #f3f4f6;
+
+      /* ── PHONE NUMBER ── swap this one value to update everywhere */
+      --phone-display: "(800) 123-4567";
+      --phone-href:    "18001234567";
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-dark);
+      background: var(--bg-light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ============================================================
+       TOP NAV
+    ============================================================ */
+    .navbar {
+      background: var(--navy-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 48px;
+      position: relative;
+      z-index: 100;
+      flex-shrink: 0;
+    }
+
+    .navbar__brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+
+    .navbar__brand svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: #7ec8e3;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    .navbar__meta {
+      color: rgba(255,255,255,0.7);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    /* ============================================================
+       HERO SECTION
+    ============================================================ */
+    .hero {
+      position: relative;
+      background: var(--navy);
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      padding: 60px 20px 120px;
+    }
+
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('hero.jpg');
+      background-size: cover;
+      background-position: center top;
+      z-index: 0;
+    }
+
+    .hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(15, 28, 48, 0.62) 0%,
+        rgba(15, 28, 48, 0.55) 60%,
+        rgba(15, 28, 48, 0.7) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      max-width: 640px;
+    }
+
+    .hero__title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.35);
+    }
+
+    .hero__sub {
+      font-size: clamp(14px, 2.2vw, 17px);
+      color: rgba(255,255,255,0.9);
+      line-height: 1.6;
+      margin-bottom: 28px;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.3);
+    }
+
+    .hero__badges {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(255,255,255,0.55);
+      backdrop-filter: blur(6px);
+      background: rgba(255,255,255,0.12);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      cursor: default;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .badge:hover {
+      background: rgba(255,255,255,0.22);
+      border-color: rgba(255,255,255,0.8);
+    }
+
+    .badge svg {
+      width: 14px;
+      height: 14px;
+      stroke: #6ee7b7;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       QUIZ CARD (floats up into hero)
+    ============================================================ */
+    .quiz-wrap {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      margin-top: -90px;
+      padding: 0 16px 48px;
+    }
+
+    .quiz-card {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.06);
+      width: 100%;
+      max-width: 520px;
+      padding: 36px 32px 32px;
+      transition: min-height 0.3s;
+    }
+
+    /* Steps */
+    .step { display: none; }
+    .step.active { display: block; }
+
+    /* Step header: label + progress */
+    .step__label {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 10px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .progress-bar-track {
+      background: #e5e7eb;
+      border-radius: 999px;
+      height: 5px;
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--navy);
+      transition: width 0.4s cubic-bezier(.4,0,.2,1);
+    }
+
+    .step__question {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.2rem, 3.5vw, 1.55rem);
+      font-weight: 700;
+      color: var(--text-dark);
+      text-align: center;
+      line-height: 1.3;
+      margin-bottom: 28px;
+    }
+
+    /* Answer buttons */
+    .answer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 12px;
+    }
+
+    .answer-btn {
+      padding: 14px 10px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--text-dark);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.18s, background 0.18s, color 0.18s, transform 0.12s, box-shadow 0.18s;
+      text-align: center;
+    }
+
+    .answer-btn:hover {
+      border-color: var(--navy);
+      background: rgba(26,43,74,0.06);
+      transform: translateY(-1px);
+      box-shadow: 0 3px 12px rgba(26,43,74,0.1);
+    }
+
+    .answer-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Disqualify screen */
+    .disqualify {
+      text-align: center;
+      padding: 8px 0;
+    }
+
+    .disqualify__icon {
+      font-size: 42px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .disqualify__title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+    }
+
+    .disqualify__text {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Result / Call screen */
+    .result {
+      text-align: center;
+      padding: 4px 0;
+    }
+
+    .result__icon {
+      font-size: 44px;
+      margin-bottom: 14px;
+      display: block;
+      animation: popIn 0.5s cubic-bezier(.17,.67,.29,1.35) both;
+    }
+
+    @keyframes popIn {
+      0%   { transform: scale(0.6); opacity: 0; }
+      100% { transform: scale(1);   opacity: 1; }
+    }
+
+    .result__title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.3rem, 3.5vw, 1.7rem);
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+
+    .result__sub {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+
+    /* Call button */
+    /* ── PHONE NUMBER: update the href and text below (search "PHONE") */
+    .call-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 16px 24px;
+      border-radius: 10px;
+      background: var(--green);
+      color: var(--white);
+      font-size: clamp(1rem, 3vw, 1.25rem);
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.12s, box-shadow 0.2s;
+      box-shadow: 0 4px 18px rgba(40,167,69,0.35);
+    }
+
+    .call-btn:hover {
+      background: var(--green-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(40,167,69,0.45);
+    }
+
+    .call-btn:active { transform: translateY(0); }
+
+    .call-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    .result__hours {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--navy);
+      font-weight: 500;
+      line-height: 1.7;
+    }
+
+    .result__partner-note {
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .result__disclaimer {
+      margin-top: 10px;
+      font-size: 11px;
+      color: #9ca3af;
+      line-height: 1.6;
+      text-align: left;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      margin-top: auto;
+      background: #f9fafb;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 20px 16px;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    footer a {
+      color: var(--navy);
+      text-decoration: underline;
+      font-size: 13px;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    footer a:hover { color: var(--green); }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 500px) {
+      .navbar { padding: 0 14px; }
+      .navbar__meta { font-size: 11px; }
+      .quiz-card { padding: 28px 20px 24px; }
+      .hero { padding: 50px 16px 110px; }
+      .quiz-wrap { margin-top: -80px; }
+    }
+
+    @media (max-width: 380px) {
+      .answer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav class="navbar" role="navigation" aria-label="Navegación principal">
+    <a class="navbar__brand" href="#">
+      <!-- Anchor / compass icon -->
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"/>
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" stroke="none" fill="#7ec8e3" opacity="0.4"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="12" x2="14.5" y2="14.5"/>
+      </svg>
+      Harborway Life
+    </a>
+    <span class="navbar__meta">Publirreportaje &nbsp;·&nbsp; Gastos Finales &nbsp;·&nbsp; 2026</span>
+  </nav>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="hero" aria-label="Sección principal">
+    <div class="hero__bg" role="img" aria-label="Familia hispana multigeneracional sonriendo juntos"></div>
+    <div class="hero__overlay"></div>
+
+    <div class="hero__content">
+      <h1 class="hero__title">Regale a Su Familia Paz,<br>No Una Carga</h1>
+      <p class="hero__sub">
+        Cobertura accesible para gastos finales — sin examen médico.<br>
+        Proteja hoy a sus seres queridos.
+      </p>
+      <div class="hero__badges">
+        <span class="badge">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          Sin Examen Médico
+        </span>
+        <span class="badge">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Cobertura para Todos
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       QUIZ CARD (floats over hero/bg transition)
+  ============================================================ -->
+  <div class="quiz-wrap">
+    <div class="quiz-card" id="quizCard" role="main" aria-live="polite">
+
+      <!-- ── STEP 1: Age ── -->
+      <div class="step active" id="step1" role="group" aria-labelledby="q1label">
+        <div class="step__label" id="q1label">Pregunta 1/2</div>
+        <div class="progress-bar-track" aria-hidden="true">
+          <div class="progress-bar-fill" style="width:50%"></div>
+        </div>
+        <p class="step__question">¿Cuál es su rango de edad?</p>
+        <div class="answer-grid">
+          <button class="answer-btn" id="age-55-64" onclick="selectAge('55-64')" aria-label="Edad 55 a 64 años">55–64</button>
+          <button class="answer-btn" id="age-65-80" onclick="selectAge('65-80')" aria-label="Edad 65 a 80 años">65–80</button>
+          <button class="answer-btn" id="age-80plus" onclick="selectAge('80+')" aria-label="Mayor de 80 años">80+</button>
+        </div>
+      </div>
+
+      <!-- ── STEP 2: US Residency ── -->
+      <div class="step" id="step2" role="group" aria-labelledby="q2label">
+        <div class="step__label" id="q2label">Pregunta 2/2</div>
+        <div class="progress-bar-track" aria-hidden="true">
+          <div class="progress-bar-fill" style="width:100%"></div>
+        </div>
+        <p class="step__question">¿Vive usted en los Estados Unidos?</p>
+        <div class="answer-grid">
+          <button class="answer-btn" id="residence-si" onclick="selectResidence('si')" aria-label="Sí, vivo en los Estados Unidos">Sí</button>
+          <button class="answer-btn" id="residence-no" onclick="selectResidence('no')" aria-label="No vivo en los Estados Unidos">No</button>
+        </div>
+      </div>
+
+      <!-- ── DISQUALIFY SCREEN ── -->
+      <div class="step" id="stepDisqualify" role="alert">
+        <div class="disqualify">
+          <span class="disqualify__icon" aria-hidden="true">😔</span>
+          <h2 class="disqualify__title">Lo sentimos</h2>
+          <p class="disqualify__text">
+            En este momento no contamos con un plan disponible para su situación.
+          </p>
+        </div>
+      </div>
+
+      <!-- ── RESULT / CALL SCREEN ── -->
+      <div class="step" id="stepResult">
+        <div class="result">
+          <span class="result__icon" aria-hidden="true">🎉</span>
+          <h2 class="result__title">¡Llame ahora para su<br>cotización gratis!</h2>
+          <p class="result__sub">
+            Hable con un agente experto y obtenga la cobertura que su familia merece.
+          </p>
+
+          <!-- ══════════════════════════════════════════
+               PHONE NUMBER — update href AND visible text here
+               href format: tel:+1XXXXXXXXXX
+          ══════════════════════════════════════════ -->
+          <a class="call-btn" href="tel:+18001234567" id="callButton" aria-label="Llamar ahora al (800) 123-4567">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.59 1.25h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.69 2.81a2 2 0 0 1-.45 2.11L7.91 8.81a16 16 0 0 0 5.55 5.55l1.72-1.72a2 2 0 0 1 2.11-.45c.91.33 1.85.56 2.81.69a2 2 0 0 1 1.72 2.04z"/>
+            </svg>
+            (800) 123-4567
+          </a>
+          <!-- ══════════════════════════════════════════ -->
+
+          <p class="result__hours">
+            Lunes a Jueves &nbsp;·&nbsp; 9:30 am – 7:00 pm EST<br>
+            Viernes &nbsp;·&nbsp; 9:30 am – 6:00 pm EST
+          </p>
+
+          <p class="result__partner-note">
+            Click the button below to connect with an insurance agent from our marketing partner Insurance Supermarket Inc.
+          </p>
+
+          <p class="result__disclaimer">
+            Al llamar, usted acepta ser contactado por uno de nuestros socios de marketing, incluyendo Insurance Supermarket Inc., por teléfono, mensaje de texto y/o correo electrónico con el propósito de recibir información sobre seguros de vida para gastos finales. Este consentimiento puede ser revocado en cualquier momento.
+          </p>
+        </div>
+      </div>
+
+    </div><!-- /quiz-card -->
+  </div><!-- /quiz-wrap -->
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer role="contentinfo">
+    <p>© 2026 Harborway Life. Todos los derechos reservados.</p>
+    <a href="#" id="privacyLink">Política de Privacidad</a>
+  </footer>
+
+  <!-- ============================================================
+       QUIZ JAVASCRIPT
+  ============================================================ -->
+  <script>
+    function showStep(id) {
+      document.querySelectorAll('.step').forEach(function(el) {
+        el.classList.remove('active');
+      });
+      var target = document.getElementById(id);
+      if (target) target.classList.add('active');
+      // Smooth-scroll card into view on mobile
+      document.getElementById('quizCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function selectAge(range) {
+      if (range === '80+') {
+        showStep('stepDisqualify');
+      } else {
+        showStep('step2');
+      }
+    }
+
+    function selectResidence(answer) {
+      if (answer === 'no') {
+        showStep('stepDisqualify');
+      } else {
+        showStep('stepResult');
+      }
+    }
+  </script>
+
+</body>
+</html>
